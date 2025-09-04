@@ -70,3 +70,11 @@ OPA Gatekeeper → More advanced admission policies (complex, Rego-based).
 🔥 Interview-ready summary:
 
 "In our Kubernetes cluster, we use different tools for different layers of security: AppArmor to restrict container capabilities at the OS level, Falco for runtime threat detection, Kyverno to enforce Kubernetes-native policies in a simple YAML way, and OPA Gatekeeper when we need more advanced policy-as-code enforcement using Rego. This gives us defense-in-depth across runtime, admission, and node-level security."
+
+AppArmor → Node-level restrictions
+
+Falco → Runtime threat detection
+
+Kyverno → Admission control with simple YAML policies
+
+OPA Gatekeeper → Advanced admission control with Rego (policy as code)

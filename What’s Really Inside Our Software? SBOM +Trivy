@@ -1,0 +1,75 @@
+🚨 Problem: What’s Really Inside Our Software?
+
+In today’s cloud-native world, we rely heavily on container images, open-source libraries, and third-party dependencies.
+But here’s the challenge:
+
+Do we really know what’s inside the software we ship?
+
+Can we prove what components exist inside a container image?
+
+How do we check for security risks or license issues when so much is pulled from external sources?
+
+Without visibility, we’re essentially shipping a black box. And attackers love black boxes.
+
+✅ Solution: SBOM + Trivy
+1️⃣ Generate an SBOM
+
+An SBOM (Software Bill of Materials) is like a nutrition label or ingredient list for software.
+It tells us exactly:
+
+Which libraries and packages are inside
+
+What versions they are
+
+Where they came from
+
+Example command:
+
+bom generate spdx-json \
+  --image registry.k8s.io/kube-controller-manager:v1.32.0 \
+  --output ./sbom1.json
+
+
+👉 This produces an SPDX JSON SBOM (sbom1.json) that describes everything inside the container image.
+
+2️⃣ Scan the SBOM with Trivy
+
+Once we know the ingredients, we need to check if any of them are unsafe.
+This is where Trivy, an open-source security scanner, comes in.
+
+Example command:
+
+trivy sbom ./sbom1.json \
+  --format json \
+  --output ./sbom_check_result.json
+
+
+👉 Trivy analyzes the SBOM and checks for:
+
+Known security vulnerabilities (CVEs)
+
+License compliance risks
+
+Other potential issues
+
+The results are saved in sbom_check_result.json — your security inspection report.
+
+🔍 Why this combo matters
+
+Transparency → Know exactly what’s inside your software.
+
+Security → Detect vulnerable components before attackers do.
+
+Compliance → Ensure licenses align with your policies.
+
+Efficiency → SBOMs can be scanned repeatedly without re-scanning the raw image.
+
+🌐 In Simple Terms
+
+SBOM = Ingredient list
+
+Trivy = Health inspector
+
+Together = You not only know what’s inside, but also whether it’s safe.
+
+💡 As supply chain security becomes a boardroom topic, combining SBOM generation with tools like Trivy is no longer optional — it’s becoming a best practice.
